@@ -1,0 +1,79 @@
+{
+    "models": [
+        {
+            "classname": "Circus",
+            "code": "class Circus(Base):\n    \"\"\"description: Details about different circus setups.\"\"\"\n    __tablename__ = 'circus'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    location = Column(String, nullable=True)\n    start_date = Column(Date, default=date.today)\n    end_date = Column(Date, default=date.today)",
+            "description": "Details about different circus setups.",
+            "name": "circus"
+        },
+        {
+            "classname": "Performer",
+            "code": "class Performer(Base):\n    \"\"\"description: Information about performers within a circus.\"\"\"\n    __tablename__ = 'performer'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    first_name = Column(String, nullable=False)\n    last_name = Column(String, nullable=False)\n    age = Column(Integer, nullable=True)\n    specialty = Column(String, nullable=True)",
+            "description": "Information about performers within a circus.",
+            "name": "performer"
+        },
+        {
+            "classname": "Act",
+            "code": "class Act(Base):\n    \"\"\"description: Performances or acts available in the circus shows.\"\"\"\n    __tablename__ = 'act'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    title = Column(String, nullable=False)\n    description = Column(Text, nullable=True)\n    duration_minutes = Column(Integer, nullable=False)",
+            "description": "Performances or acts available in the circus shows.",
+            "name": "act"
+        },
+        {
+            "classname": "Show",
+            "code": "class Show(Base):\n    \"\"\"description: Scheduled shows that occur at circuses.\"\"\"\n    __tablename__ = 'show'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    date = Column(Date, default=date.today)\n    circus_id = Column(Integer, ForeignKey('circus.id'), nullable=False)",
+            "description": "Scheduled shows that occur at circuses.",
+            "name": "show"
+        },
+        {
+            "classname": "Ticket",
+            "code": "class Ticket(Base):\n    \"\"\"description: Tickets sold for circus shows.\"\"\"\n    __tablename__ = 'ticket'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    show_id = Column(Integer, ForeignKey('show.id'), nullable=False)\n    price = Column(Integer, nullable=False)\n    seat_number = Column(String, nullable=False)\n    purchaser_name = Column(String, nullable=False)",
+            "description": "Tickets sold for circus shows.",
+            "name": "ticket"
+        },
+        {
+            "classname": "Animal",
+            "code": "class Animal(Base):\n    \"\"\"description: Animals involved in circus performances.\"\"\"\n    __tablename__ = 'animal'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    species = Column(String, nullable=False)\n    age = Column(Integer, nullable=True)",
+            "description": "Animals involved in circus performances.",
+            "name": "animal"
+        },
+        {
+            "classname": "Caretaker",
+            "code": "class Caretaker(Base):\n    \"\"\"description: Individuals responsible for the care of circus animals.\"\"\"\n    __tablename__ = 'caretaker'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    start_date = Column(Date, default=date.today)",
+            "description": "Individuals responsible for the care of circus animals.",
+            "name": "caretaker"
+        },
+        {
+            "classname": "Equipment",
+            "code": "class Equipment(Base):\n    \"\"\"description: Equipment used in circus performances and logistics.\"\"\"\n    __tablename__ = 'equipment'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    function = Column(String, nullable=True)",
+            "description": "Equipment used in circus performances and logistics.",
+            "name": "equipment"
+        },
+        {
+            "classname": "PerformerActAssociation",
+            "code": "class PerformerActAssociation(Base):\n    \"\"\"description: Link table to associate performers with acts.\"\"\"\n    __tablename__ = 'performer_act_association'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    performer_id = Column(Integer, ForeignKey('performer.id'), nullable=False)\n    act_id = Column(Integer, ForeignKey('act.id'), nullable=False)",
+            "description": "Link table to associate performers with acts.",
+            "name": "performer_act_association"
+        },
+        {
+            "classname": "AnimalShowAssociation",
+            "code": "class AnimalShowAssociation(Base):\n    \"\"\"description: Link table to associate animals with shows.\"\"\"\n    __tablename__ = 'animal_show_association'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    animal_id = Column(Integer, ForeignKey('animal.id'), nullable=False)\n    show_id = Column(Integer, ForeignKey('show.id'), nullable=False)",
+            "description": "Link table to associate animals with shows.",
+            "name": "animal_show_association"
+        },
+        {
+            "classname": "CaretakerAnimalAssociation",
+            "code": "class CaretakerAnimalAssociation(Base):\n    \"\"\"description: Link table to associate caretakers with animals.\"\"\"\n    __tablename__ = 'caretaker_animal_association'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    caretaker_id = Column(Integer, ForeignKey('caretaker.id'), nullable=False)\n    animal_id = Column(Integer, ForeignKey('animal.id'), nullable=False)",
+            "description": "Link table to associate caretakers with animals.",
+            "name": "caretaker_animal_association"
+        },
+        {
+            "classname": "ShowEquipmentAssociation",
+            "code": "class ShowEquipmentAssociation(Base):\n    \"\"\"description: Link table to associate equipment with shows.\"\"\"\n    __tablename__ = 'show_equipment_association'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    show_id = Column(Integer, ForeignKey('show.id'), nullable=False)\n    equipment_id = Column(Integer, ForeignKey('equipment.id'), nullable=False)",
+            "description": "Link table to associate equipment with shows.",
+            "name": "show_equipment_association"
+        }
+    ],
+    "rules": [],
+    "test_data": "circus1 = Circus(name='Amazing Circus', location='New York', start_date=date(2023, 10, 1), end_date=date(2023, 12, 10))\ncircus2 = Circus(name='Wonderful Circus', location='Boston', start_date=date(2023, 11, 20), end_date=date(2024, 2, 1))\ncircus3 = Circus(name='Mystic Circus', location='Chicago', start_date=date(2023, 9, 15), end_date=date(2024, 1, 5))\ncircus4 = Circus(name='Epic Circus', location='Los Angeles', start_date=date(2023, 10, 5), end_date=date(2024, 3, 15))\n\nperformer1 = Performer(first_name='John', last_name='Doe', age=28, specialty='Juggler')\nperformer2 = Performer(first_name='Jane', last_name='Smith', age=32, specialty='Acrobat')\nperformer3 = Performer(first_name='Alice', last_name='Johnson', age=24, specialty='Clown')\nperformer4 = Performer(first_name='Bob', last_name='Williams', age=30, specialty='Magician')\n\nact1 = Act(title='The Grand Juggle', description='A spectacular juggling act with lights.', duration_minutes=15)\nact2 = Act(title='Flying Acrobats', description='Daring feats of acrobatics on the trapeze.', duration_minutes=20)\nact3 = Act(title='Clown Parade', description='A fun-filled parade of clowns.', duration_minutes=10)\nact4 = Act(title='Magic Extravaganza', description='A mesmerizing magic show.', duration_minutes=25)\n\nshow1 = Show(name='Night Show', date=date(2023, 10, 3), circus_id=1)\nshow2 = Show(name='Matinee Spectacle', date=date(2023, 11, 25), circus_id=2)\nshow3 = Show(name='Evening Drama', date=date(2023, 12, 12), circus_id=3)\nshow4 = Show(name='Holiday Bash', date=date(2024, 1, 7), circus_id=4)\n\nticket1 = Ticket(show_id=1, price=50, seat_number='A1', purchaser_name='Martin Laney')\nticket2 = Ticket(show_id=2, price=40, seat_number='B2', purchaser_name='Samantha Brown')\nticket3 = Ticket(show_id=3, price=60, seat_number='C3', purchaser_name='Liam Cooper')\nticket4 = Ticket(show_id=4, price=55, seat_number='D4', purchaser_name='Emma Nash')\n\nanimal1 = Animal(name='Leo', species='Lion', age=5)\nanimal2 = Animal(name='Ella', species='Elephant', age=8)\nanimal3 = Animal(name='Stripes', species='Tiger', age=4)\nanimal4 = Animal(name='Biggy', species='Bear', age=6)\n\ncaretaker1 = Caretaker(name='Mike Hart', start_date=date(2022, 1, 5))\ncaretaker2 = Caretaker(name='Lucy Adams', start_date=date(2018, 4, 9))\ncaretaker3 = Caretaker(name='Max Wall', start_date=date(2020, 7, 22))\ncaretaker4 = Caretaker(name='Nina Day', start_date=date(2019, 11, 11))\n\nequipment1 = Equipment(name='Trampoline', function='Acrobatics')\nequipment2 = Equipment(name='Spotlight', function='Lighting')\nequipment3 = Equipment(name='Sound System', function='Audio')\nequipment4 = Equipment(name='Safety Net', function='Safety')\n\nperformer_act_association1 = PerformerActAssociation(performer_id=1, act_id=1)\nperformer_act_association2 = PerformerActAssociation(performer_id=2, act_id=2)\nperformer_act_association3 = PerformerActAssociation(performer_id=3, act_id=3)\nperformer_act_association4 = PerformerActAssociation(performer_id=4, act_id=4)\n\nanimal_show_association1 = AnimalShowAssociation(animal_id=1, show_id=1)\nanimal_show_association2 = AnimalShowAssociation(animal_id=2, show_id=2)\nanimal_show_association3 = AnimalShowAssociation(animal_id=3, show_id=3)\nanimal_show_association4 = AnimalShowAssociation(animal_id=4, show_id=4)\n\ncaretaker_animal_association1 = CaretakerAnimalAssociation(caretaker_id=1, animal_id=1)\ncaretaker_animal_association2 = CaretakerAnimalAssociation(caretaker_id=2, animal_id=2)\ncaretaker_animal_association3 = CaretakerAnimalAssociation(caretaker_id=3, animal_id=3)\ncaretaker_animal_association4 = CaretakerAnimalAssociation(caretaker_id=4, animal_id=4)\n\nshow_equipment_association1 = ShowEquipmentAssociation(show_id=1, equipment_id=1)\nshow_equipment_association2 = ShowEquipmentAssociation(show_id=2, equipment_id=2)\nshow_equipment_association3 = ShowEquipmentAssociation(show_id=3, equipment_id=3)\nshow_equipment_association4 = ShowEquipmentAssociation(show_id=4, equipment_id=4)",
+    "name": "CircusManagementDB"
+}

@@ -1,0 +1,518 @@
+about:
+  date: November 14, 2024 16:00:18
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Act:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: TEXT
+    - name: title
+      required: true
+      template: text
+      type: VARCHAR
+    - name: duration_minutes
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Performances or acts available in the circus shows.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    hidden: {}
+    home_template: home_template.html
+    info_list: Performances or acts available in the circus shows.
+    label: Act
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - act_id
+      name: PerformerActAssociationList
+      resource: PerformerActAssociation
+    type: Act
+  Animal:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: species
+      required: true
+      template: text
+      type: VARCHAR
+    - name: age
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Animals involved in circus performances.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Animals involved in circus performances.
+    label: Animal
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - animal_id
+      name: AnimalShowAssociationList
+      resource: AnimalShowAssociation
+    - direction: tomany
+      fks:
+      - animal_id
+      name: CaretakerAnimalAssociationList
+      resource: CaretakerAnimalAssociation
+    type: Animal
+  AnimalShowAssociation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: animal_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: show_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table to associate animals with shows.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Link table to associate animals with shows.
+    label: AnimalShowAssociation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - animal_id
+      name: animal
+      resource: Animal
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: AnimalShowAssociation
+  Caretaker:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: start_date
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Individuals responsible for the care of circus animals.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Individuals responsible for the care of circus animals.
+    label: Caretaker
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - caretaker_id
+      name: CaretakerAnimalAssociationList
+      resource: CaretakerAnimalAssociation
+    type: Caretaker
+  CaretakerAnimalAssociation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: animal_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: caretaker_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table to associate caretakers with animals.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Link table to associate caretakers with animals.
+    label: CaretakerAnimalAssociation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - animal_id
+      name: animal
+      resource: Animal
+    - direction: toone
+      fks:
+      - caretaker_id
+      name: caretaker
+      resource: Caretaker
+    type: CaretakerAnimalAssociation
+  Circu:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: location
+      template: text
+      type: VARCHAR
+    - name: start_date
+      type: DATE
+    - name: end_date
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Details about different circus setups.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Details about different circus setups.
+    label: Circu
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - circus_id
+      name: ShowList
+      resource: Show
+    type: Circu
+  Equipment:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: function
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Equipment used in circus performances and logistics.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Equipment used in circus performances and logistics.
+    label: Equipment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - equipment_id
+      name: ShowEquipmentAssociationList
+      resource: ShowEquipmentAssociation
+    type: Equipment
+  Performer:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: age
+      template: integer
+      type: INTEGER
+    - name: specialty
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Information about performers within a circus.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Information about performers within a circus.
+    label: Performer
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - performer_id
+      name: PerformerActAssociationList
+      resource: PerformerActAssociation
+    type: Performer
+  PerformerActAssociation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: act_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: performer_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table to associate performers with acts.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Link table to associate performers with acts.
+    label: PerformerActAssociation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - act_id
+      name: act
+      resource: Act
+    - direction: toone
+      fks:
+      - performer_id
+      name: performer
+      resource: Performer
+    type: PerformerActAssociation
+  Show:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: circus_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: date
+      type: DATE
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Scheduled shows that occur at circuses.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Scheduled shows that occur at circuses.
+    label: Show
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - show_id
+      name: AnimalShowAssociationList
+      resource: AnimalShowAssociation
+    - direction: tomany
+      fks:
+      - show_id
+      name: ShowEquipmentAssociationList
+      resource: ShowEquipmentAssociation
+    - direction: tomany
+      fks:
+      - show_id
+      name: TicketList
+      resource: Ticket
+    - direction: toone
+      fks:
+      - circus_id
+      name: circus
+      resource: Circu
+    type: Show
+  ShowEquipmentAssociation:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: equipment_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: show_id
+      required: true
+      template: integer
+      type: INTEGER
+    description: Link table to associate equipment with shows.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Link table to associate equipment with shows.
+    label: ShowEquipmentAssociation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - equipment_id
+      name: equipment
+      resource: Equipment
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: ShowEquipmentAssociation
+  Ticket:
+    columns:
+    - label: ' purchaser_name*'
+      name: purchaser_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: show_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: price
+      required: true
+      template: integer
+      type: INTEGER
+    - name: seat_number
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Tickets sold for circus shows.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: purchaser_name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Tickets sold for circus shows.
+    label: Ticket
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: Ticket
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

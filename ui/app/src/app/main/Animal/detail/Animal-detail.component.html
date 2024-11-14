@@ -1,0 +1,140 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Animal_form_edit" 
+        service="Animal" 
+        entity="Animal" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #species attr="species" label="species" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #age attr="age" label="age" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="ANIMALSHOWASSOCIATION-animal_id">
+    <div layout-padding>
+      <o-table 
+        attr="AnimalShowAssociationTable" 
+        service="AnimalShowAssociation" 
+        entity="AnimalShowAssociation" 
+        keys="id"
+        parent-keys="animal_id:id"
+        columns="id;animal_id;show_id"  
+        horizontal-scroll="yes"
+        detail-form-route="AnimalShowAssociation" 
+        edit-form-route="AnimalShowAssociation"
+        visible-columns="id;animal_id;show_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="animal_id" title="animal_id">
+    <o-table-cell-renderer-service attr="animal_id" 
+        service="Animal" entity="AnimalType" columns="id;name"
+        parent-keys="id:animal_id"
+        value-column="name" keys="animal_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="show_id" title="show_id">
+    <o-table-cell-renderer-service attr="show_id" 
+        service="Show" entity="ShowType" columns="id;name"
+        parent-keys="id:show_id"
+        value-column="name" keys="show_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="CARETAKERANIMALASSOCIATION-animal_id">
+    <div layout-padding>
+      <o-table 
+        attr="CaretakerAnimalAssociationTable" 
+        service="CaretakerAnimalAssociation" 
+        entity="CaretakerAnimalAssociation" 
+        keys="id"
+        parent-keys="animal_id:id"
+        columns="id;animal_id;caretaker_id"  
+        horizontal-scroll="yes"
+        detail-form-route="CaretakerAnimalAssociation" 
+        edit-form-route="CaretakerAnimalAssociation"
+        visible-columns="id;animal_id;caretaker_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="animal_id" title="animal_id">
+    <o-table-cell-renderer-service attr="animal_id" 
+        service="Animal" entity="AnimalType" columns="id;name"
+        parent-keys="id:animal_id"
+        value-column="name" keys="animal_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="caretaker_id" title="caretaker_id">
+    <o-table-cell-renderer-service attr="caretaker_id" 
+        service="Caretaker" entity="CaretakerType" columns="id;name"
+        parent-keys="id:caretaker_id"
+        value-column="name" keys="caretaker_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>

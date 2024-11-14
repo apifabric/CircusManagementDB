@@ -1,0 +1,334 @@
+about:
+  date: November 14, 2024 16:00:18
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 10
+  number_tables: 12
+info_toggle_checked: true
+resources:
+  Act:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: title
+      required: true
+    - name: duration_minutes
+      required: true
+    - name: id
+    description: Performances or acts available in the circus shows.
+    info_list: Performances or acts available in the circus shows.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - act_id
+      name: PerformerActAssociationList
+      resource: PerformerActAssociation
+    type: Act
+    user_key: description
+  Animal:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: species
+      required: true
+    - name: age
+    - name: id
+    description: Animals involved in circus performances.
+    info_list: Animals involved in circus performances.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - animal_id
+      name: AnimalShowAssociationList
+      resource: AnimalShowAssociation
+    - direction: tomany
+      fks:
+      - animal_id
+      name: CaretakerAnimalAssociationList
+      resource: CaretakerAnimalAssociation
+    type: Animal
+    user_key: name
+  AnimalShowAssociation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: animal_id
+      required: true
+    - name: show_id
+      required: true
+    description: Link table to associate animals with shows.
+    info_list: Link table to associate animals with shows.
+    tab_groups:
+    - direction: toone
+      fks:
+      - animal_id
+      name: animal
+      resource: Animal
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: AnimalShowAssociation
+    user_key: id
+  Caretaker:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: start_date
+      type: DATE
+    - name: id
+    description: Individuals responsible for the care of circus animals.
+    info_list: Individuals responsible for the care of circus animals.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - caretaker_id
+      name: CaretakerAnimalAssociationList
+      resource: CaretakerAnimalAssociation
+    type: Caretaker
+    user_key: name
+  CaretakerAnimalAssociation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: animal_id
+      required: true
+    - name: caretaker_id
+      required: true
+    description: Link table to associate caretakers with animals.
+    info_list: Link table to associate caretakers with animals.
+    tab_groups:
+    - direction: toone
+      fks:
+      - animal_id
+      name: animal
+      resource: Animal
+    - direction: toone
+      fks:
+      - caretaker_id
+      name: caretaker
+      resource: Caretaker
+    type: CaretakerAnimalAssociation
+    user_key: id
+  Circu:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: location
+    - name: start_date
+      type: DATE
+    - name: end_date
+      type: DATE
+    - name: id
+    description: Details about different circus setups.
+    info_list: Details about different circus setups.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - circus_id
+      name: ShowList
+      resource: Show
+    type: Circu
+    user_key: name
+  Equipment:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: function
+    - name: id
+    description: Equipment used in circus performances and logistics.
+    info_list: Equipment used in circus performances and logistics.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - equipment_id
+      name: ShowEquipmentAssociationList
+      resource: ShowEquipmentAssociation
+    type: Equipment
+    user_key: name
+  Performer:
+    attributes:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+    - name: last_name
+      required: true
+    - name: age
+    - name: specialty
+    - name: id
+    description: Information about performers within a circus.
+    info_list: Information about performers within a circus.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - performer_id
+      name: PerformerActAssociationList
+      resource: PerformerActAssociation
+    type: Performer
+    user_key: first_name
+  PerformerActAssociation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: act_id
+      required: true
+    - name: performer_id
+      required: true
+    description: Link table to associate performers with acts.
+    info_list: Link table to associate performers with acts.
+    tab_groups:
+    - direction: toone
+      fks:
+      - act_id
+      name: act
+      resource: Act
+    - direction: toone
+      fks:
+      - performer_id
+      name: performer
+      resource: Performer
+    type: PerformerActAssociation
+    user_key: id
+  Show:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: circus_id
+      required: true
+    - name: date
+      type: DATE
+    - name: id
+    description: Scheduled shows that occur at circuses.
+    info_list: Scheduled shows that occur at circuses.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - show_id
+      name: AnimalShowAssociationList
+      resource: AnimalShowAssociation
+    - direction: tomany
+      fks:
+      - show_id
+      name: ShowEquipmentAssociationList
+      resource: ShowEquipmentAssociation
+    - direction: tomany
+      fks:
+      - show_id
+      name: TicketList
+      resource: Ticket
+    - direction: toone
+      fks:
+      - circus_id
+      name: circus
+      resource: Circu
+    type: Show
+    user_key: name
+  ShowEquipmentAssociation:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: equipment_id
+      required: true
+    - name: show_id
+      required: true
+    description: Link table to associate equipment with shows.
+    info_list: Link table to associate equipment with shows.
+    tab_groups:
+    - direction: toone
+      fks:
+      - equipment_id
+      name: equipment
+      resource: Equipment
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: ShowEquipmentAssociation
+    user_key: id
+  Ticket:
+    attributes:
+    - label: ' purchaser_name*'
+      name: purchaser_name
+      required: true
+      search: true
+      sort: true
+    - name: show_id
+      required: true
+    - name: price
+      required: true
+    - name: seat_number
+      required: true
+    - name: id
+    description: Tickets sold for circus shows.
+    info_list: Tickets sold for circus shows.
+    tab_groups:
+    - direction: toone
+      fks:
+      - show_id
+      name: show
+      resource: Show
+    type: Ticket
+    user_key: purchaser_name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

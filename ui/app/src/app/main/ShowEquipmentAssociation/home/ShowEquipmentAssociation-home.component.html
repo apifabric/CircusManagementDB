@@ -1,0 +1,49 @@
+<o-form-layout-manager attr="ShowEquipmentAssociation" mode="tab" title="SHOWEQUIPMENTASSOCIATION">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="ShowEquipmentAssociationTable" 
+            service="ShowEquipmentAssociation" 
+            entity="ShowEquipmentAssociation" 
+            title="SHOWEQUIPMENTASSOCIATION"
+            keys="id"
+            columns="id;equipment_id;show_id" 
+            header-actions="R;D"
+            visible-columns="id;equipment_id;show_id"  
+            sort-columns="id" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-column attr="equipment_id" title="equipment_id">
+    <o-table-cell-renderer-service attr="equipment_id" 
+        service="Equipment" entity="EquipmentType" columns="id;name"
+        parent-keys="id:equipment_id"
+        value-column="name" keys="equipment_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="show_id" title="show_id">
+    <o-table-cell-renderer-service attr="show_id" 
+        service="Show" entity="ShowType" columns="id;name"
+        parent-keys="id:show_id"
+        value-column="name" keys="show_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>
